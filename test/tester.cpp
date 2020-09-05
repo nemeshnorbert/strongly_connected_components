@@ -80,5 +80,6 @@ int main()
             return 1;
         }
     }
+    std::cout << "Ok\n";
     return 0;
 }
