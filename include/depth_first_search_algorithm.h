@@ -1,11 +1,11 @@
 #ifndef STRONGLY_CONNECTED_COMPONENTS_DEPTH_FIRST_SEARCH_ALGORITHM_H_
 #define STRONGLY_CONNECTED_COMPONENTS_DEPTH_FIRST_SEARCH_ALGORITHM_H_
 
-#include "GraphContainers.h"
-#include "VertexAction.h"
-#include "EdgeAction.h"
-#include "GraphColor.h"
-#include "RootedAlgorithmBase.h"
+#include "graph_containers.h"
+#include "vertex_action.h"
+#include "edge_action.h"
+#include "graph_color.h"
+#include "rooted_algorithm_base.h"
 
 namespace Graph
 {
@@ -35,7 +35,7 @@ namespace Graph
             VertexColors() const
         {
                 return colors_;
-            }
+        }
 
         GraphColor GetVertexColor(const TVertexDescriptor& vertex) const
         {

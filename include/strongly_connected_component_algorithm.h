@@ -2,11 +2,12 @@
 #define STRONGLY_CONNECTED_COMPONENTS_STRONGLY_CONNECTED_COMPONENT_ALGORITHM_H_
 
 #include <memory>
-#include "VertexAction.h"
-#include "EdgeAction.h"
-#include "GraphContainers.h"
-#include "AlgorithmBase.h"
-#include "DepthFirstSearchAlgorithm.h"
+
+#include "vertex_action.h"
+#include "edge_action.h"
+#include "graph_containers.h"
+#include "algorithm_base.h"
+#include "depth_first_search_algorithm.h"
 
 namespace Graph
 {

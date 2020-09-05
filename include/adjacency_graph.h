@@ -1,9 +1,9 @@
 #ifndef STRONGLY_CONNECTED_COMPONENTS_ADJACENCY_GRAPH_H_
 #define STRONGLY_CONNECTED_COMPONENTS_ADJACENCY_GRAPH_H_
 
-#include "IteratorTools.h"
-#include "GraphContainers.h"
-#include "Edge.h"
+#include "iterator_tools.h"
+#include "graph_containers.h"
+#include "edge.h"
 
 namespace Graph
 {

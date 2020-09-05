@@ -1,7 +1,7 @@
 #ifndef STRONGLY_CONNECTED_COMPONENTS_ROOTED_ALGORITHM_BASE_H_
 #define STRONGLY_CONNECTED_COMPONENTS_ROOTED_ALGORITHM_BASE_H_
 
-#include "AlgorithmBase.h"
+#include "algorithm_base.h"
 
 namespace Graph
 {
