@@ -80,6 +80,6 @@ int main()
             return 1;
         }
     }
-    std::cout << "Ok\n";
+    std::cout << "Tests passed\n";
     return 0;
 }

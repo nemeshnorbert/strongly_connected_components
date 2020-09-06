@@ -34,14 +34,14 @@ Graph::AdjacencyGraph<int, Graph::Edge<int>> ReadGraph()
     return graph;
 }
 
-
-int main()
+void Run()
 {
-    using Algorithm = Graph::StronglyConnectedComponentAlgorithm<
+    std::cout << "This application detects strongly connected components of a given graph\n";
+    using AlgorithmType = Graph::StronglyConnectedComponentAlgorithm<
         Graph::AdjacencyGraph<int, Graph::Edge<int>>>;
 
     Graph::AdjacencyGraph<int, Graph::Edge<int>> graph = ReadGraph();
-    Algorithm algo(graph);
+    AlgorithmType algo(graph);
     algo.Compute();
     auto components = algo.GetComponents();
 
@@ -50,7 +50,12 @@ int main()
         std::cout << "Vertex " << vertex << " belongs to component # "
             << (*components)[vertex] << '\n';
     }
+}
 
+
+int main()
+{
+    Run();
     return 0;
 }
 
