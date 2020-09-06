@@ -62,8 +62,11 @@ bool RunTest(const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
     catch (const std::exception& exc)
     {
         std::cout << "Test failed. Reason: " << exc.what() << '\n';
+        std::cout << "Graph: \n";
+        PrintGraph(graph);
         return false;
     }
+    std::cout << "Test passed\n";
     return true;
 }
 
@@ -72,14 +75,10 @@ int main()
 {
     for (int attempt = 0; attempt < 10; ++attempt)
     {
-        auto graph = GetRandomGraph();
-        if(!RunTest(graph))
+        if(!RunTest(GetRandomGraph()))
         {
-            std::cout << "Graph: \n";
-            PrintGraph(graph);
             return 1;
         }
     }
-    std::cout << "Tests passed\n";
     return 0;
 }
