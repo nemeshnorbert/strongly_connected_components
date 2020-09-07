@@ -32,23 +32,23 @@ Graph::AdjacencyGraph<int, Graph::Edge<int>> GetRandomGraph()
     return graph;
 }
 
-void PrintGraph(const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
+void PrintGraph(std::ostream& out, const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
 {
     using EdgeIterator = typename Graph::AdjacencyGraph<int, Graph::Edge<int>>::ConstEdgeIterator;
     for (const auto& vertex : graph.Vertices())
     {
         IteratorRange<EdgeIterator> iedges;
         graph.TryGetEdges(vertex, iedges);
-        std::cout << vertex << " -> ";
+        out << vertex << " -> ";
         for (EdgeIterator iedge = iedges.begin(); iedge != iedges.end(); ++iedge)
         {
-            std::cout << iedge->Target() << " ";
+            out << iedge->Target() << " ";
         }
-        std::cout << '\n';
+        out << '\n';
     }
 }
 
-bool RunTest(const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
+bool RunTest(std::ostream& out, const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
 {
     using Algorithm = Graph::StronglyConnectedComponentAlgorithm<
         Graph::AdjacencyGraph<int, Graph::Edge<int>>>;
@@ -61,12 +61,12 @@ bool RunTest(const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
     }
     catch (const std::exception& exc)
     {
-        std::cout << "Test failed. Reason: " << exc.what() << '\n';
-        std::cout << "Graph: \n";
-        PrintGraph(graph);
+        out << "Test failed. Reason: " << exc.what() << '\n';
+        out << "Graph: \n";
+        PrintGraph(out, graph);
         return false;
     }
-    std::cout << "Test passed\n";
+    out << "Test passed\n";
     return true;
 }
 
@@ -75,7 +75,7 @@ int main()
 {
     for (int attempt = 0; attempt < 10; ++attempt)
     {
-        if(!RunTest(GetRandomGraph()))
+        if(!RunTest(std::cout, GetRandomGraph()))
         {
             return 1;
         }
