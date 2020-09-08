@@ -6,35 +6,51 @@
 #include "adjacency_graph.h"
 #include "strongly_connected_component_algorithm.h"
 
+
 template <typename ValueType>
-ValueType GetRandomValue(ValueType min, ValueType max)
+    using UniformDistribution = typename std::enable_if<
+    std::is_integral<ValueType>::value || std::is_floating_point<ValueType>::value,
+    typename std::conditional<
+        std::is_integral<ValueType>::value,
+        std::uniform_int_distribution<ValueType>,
+        std::uniform_real_distribution<ValueType>
+    >::type
+>::type;
+
+template <typename ValueType>
+ValueType GetRandomValue(const ValueType& min, const ValueType& max)
 {
     assert(min <= max);
     static std::mt19937_64 engine;
-    std::uniform_int_distribution<ValueType> generator(min, max);
+    UniformDistribution<ValueType> generator(min, max);
     return generator(engine);
 }
 
-Graph::AdjacencyGraph<int, Graph::Edge<int>> GetRandomGraph()
+template <typename ValueType>
+Graph::AdjacencyGraph<ValueType, Graph::Edge<ValueType>> GetRandomGraph()
 {
-    Graph::AdjacencyGraph<int, Graph::Edge<int>> graph;
-    int vertexCount = GetRandomValue<int>(1, 100);
-    for (int vertex = 0; vertex < vertexCount; ++vertex)
+    Graph::AdjacencyGraph<ValueType, Graph::Edge<ValueType>> graph;
+    size_t vertexCount = GetRandomValue<size_t>(1, 100);
+    for (size_t vertex = 0; vertex < vertexCount; ++vertex)
     {
-        int edgesCount = GetRandomValue<int>(0, vertexCount - 1);
+        size_t edgesCount = GetRandomValue<size_t>(0, vertexCount - 1);
         while (edgesCount > 0)
         {
-            int destination = GetRandomValue<int>(0, vertexCount - 1);
-            graph.AddVerticesAndEdge(Graph::Edge<int>(vertex, destination));
+            size_t destination = GetRandomValue<size_t>(0, vertexCount - 1);
+            graph.AddVerticesAndEdge(
+                Graph::Edge<ValueType>(ValueType(vertex), ValueType(destination)));
             --edgesCount;
         }
     }
     return graph;
 }
 
-void PrintGraph(std::ostream& out, const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
+template <typename ValueType>
+void PrintGraph(
+    std::ostream& out, const Graph::AdjacencyGraph<ValueType, Graph::Edge<ValueType>>& graph)
 {
-    using EdgeIterator = typename Graph::AdjacencyGraph<int, Graph::Edge<int>>::ConstEdgeIterator;
+    using EdgeIterator = typename Graph::AdjacencyGraph<
+        ValueType, Graph::Edge<ValueType>>::ConstEdgeIterator;
     for (const auto& vertex : graph.Vertices())
     {
         IteratorRange<EdgeIterator> iedges;
@@ -48,10 +64,12 @@ void PrintGraph(std::ostream& out, const Graph::AdjacencyGraph<int, Graph::Edge<
     }
 }
 
-bool RunTest(std::ostream& out, const Graph::AdjacencyGraph<int, Graph::Edge<int>>& graph)
+template <typename ValueType>
+bool RunTest(
+    std::ostream& out, const Graph::AdjacencyGraph<ValueType, Graph::Edge<ValueType>>& graph)
 {
     using Algorithm = Graph::StronglyConnectedComponentAlgorithm<
-        Graph::AdjacencyGraph<int, Graph::Edge<int>>>;
+        Graph::AdjacencyGraph<ValueType, Graph::Edge<ValueType>>>;
 
     try
     {
@@ -75,7 +93,7 @@ int main()
 {
     for (int attempt = 0; attempt < 10; ++attempt)
     {
-        if(!RunTest(std::cout, GetRandomGraph()))
+        if(!RunTest(std::cout, GetRandomGraph<int>()))
         {
             return 1;
         }
