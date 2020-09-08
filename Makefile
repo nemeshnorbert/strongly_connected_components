@@ -19,7 +19,7 @@ INC := -I $(INCLUDEDIR)
 all: $(TARGET)
 
 $(TARGET): dirs $(OBJECTS)
-	$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $(SRCDIR)/main.$(SRCEXT) $(word 2, $^)
+	$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $(SRCDIR)/main.$(SRCEXT) $(filter-out dirs, $^)
 
 dirs:
 	@mkdir -p $(BUILDDIR)
